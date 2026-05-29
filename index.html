@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Your Concert Gummy</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #ffffff;
+}
+ 
+* { box-sizing: border-box; }
+ 
+#quiz {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 28px 20px 32px;
+}
+ 
+.quiz-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7A8B82;
+  margin: 0 0 10px;
+}
+ 
+.quiz-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1B3A2F;
+  margin: 0 0 24px;
+  line-height: 1.25;
+}
+ 
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #e8eeeb;
+  border-radius: 99px;
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+ 
+.progress-fill {
+  height: 100%;
+  background: #1B3A2F;
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+ 
+.question-text {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1B3A2F;
+  margin: 0 0 16px;
+  line-height: 1.4;
+}
+ 
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+ 
+.option-btn {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1.5px solid #c8d9d0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1B3A2F;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  line-height: 1.35;
+}
+ 
+.option-btn:hover {
+  border-color: #1B3A2F;
+  background: #f0f5f2;
+}
+ 
+.option-btn:active {
+  transform: scale(0.98);
+}
+ 
+.option-btn.selected {
+  border-color: #1B3A2F;
+  background: #e6eeea;
+}
+ 
+.result-card {
+  background: #1B3A2F;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+}
+ 
+.result-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8ab09a;
+  margin: 0 0 8px;
+}
+ 
+.result-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px;
+  line-height: 1.25;
+}
+ 
+.result-desc {
+  font-size: 14px;
+  color: #a8c4b2;
+  margin: 0 0 22px;
+  line-height: 1.6;
+}
+ 
+.result-cta {
+  display: inline-block;
+  padding: 12px 28px;
+  background: #D4A04A;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+  border: none;
+  cursor: pointer;
+}
+ 
+.result-cta:hover {
+  background: #c0902f;
+}
+ 
+.result-cta:active {
+  transform: scale(0.97);
+}
+ 
+.restart-btn {
+  display: block;
+  margin: 16px auto 0;
+  background: none;
+  border: none;
+  color: #8ab09a;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+ 
+.disclaimer {
+  font-size: 11px;
+  color: #7A8B82;
+  text-align: center;
+  margin: 20px 0 0;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+ 
+<div id="quiz">
+  <p class="quiz-label">Quick quiz</p>
+  <p class="quiz-title">Find your concert gummy</p>
+  <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+  <div id="question-area"></div>
+  <p class="disclaimer">Must be 21+ to purchase. Never drive impaired.</p>
+</div>
+ 
+<script>
+var questions = [
+  {
+    q: "When are you planning to take your gummy?",
+    opts: [
+      { label: "Right before I walk in", val: "rapid" },
+      { label: "About an hour before the show", val: "standard" },
+      { label: "Not sure yet", val: "standard" }
+    ]
+  },
+  {
+    q: "What kind of show are you heading to?",
+    opts: [
+      { label: "High-energy: festival, dance music, big crowd", val: "sativa" },
+      { label: "Chill: indie, jazz, seated venue", val: "hybrid" },
+      { label: "Anything goes, I just want to enjoy it", val: "hybrid" }
+    ]
+  },
+  {
+    q: "How do you prefer to feel at a show?",
+    opts: [
+      { label: "Uplifted, social, in the zone", val: "15mg" },
+      { label: "Relaxed but sharp, present the whole time", val: "15mg" },
+      { label: "I want it fast and reliable", val: "rapid" }
+    ]
+  }
+];
+ 
+var results = {
+  rapid: {
+    name: "Rapid Onset Delta 9 THC Gummies",
+    desc: "Built for concert timing. Activates in around 15 minutes so you're in the groove when the music starts, not still waiting.",
+    url: "https://mood.com/product/rapid-onset-delta-9-thc-gummies",
+    cta: "Shop rapid onset gummies"
+  },
+  "15mg": {
+    name: "15mg Delta 9 THC Gummies",
+    desc: "A reliable, well-balanced experience for a full show. THC and CBD together keep things smooth from opening act to encore.",
+    url: "https://mood.com/product/15mg-delta-9-thc-gummies",
+    cta: "Shop 15mg gummies"
+  }
+};
+ 
+var answers = [];
+var current = 0;
+ 
+function score() {
+  var counts = { rapid: 0, "15mg": 0 };
+  for (var i = 0; i < answers.length; i++) {
+    var v = answers[i];
+    if (v === "rapid") counts.rapid++;
+    else counts["15mg"]++;
+  }
+  return counts.rapid >= 2 ? "rapid" : "15mg";
+}
+ 
+function render() {
+  var area = document.getElementById("question-area");
+  var prog = document.getElementById("progress");
+ 
+  if (current >= questions.length) {
+    var key = score();
+    var r = results[key];
+    prog.style.width = "100%";
+    area.innerHTML =
+      '<div class="result-card">' +
+        '<p class="result-eyebrow">Your match</p>' +
+        '<p class="result-name">' + r.name + '</p>' +
+        '<p class="result-desc">' + r.desc + '</p>' +
+        '<a href="' + r.url + '" class="result-cta" target="_blank" rel="noopener">' + r.cta + '</a>' +
+      '</div>' +
+      '<button class="restart-btn" onclick="restart()">Start over</button>';
+    postHeight();
+    return;
+  }
+ 
+  prog.style.width = Math.round((current / questions.length) * 100) + "%";
+  var q = questions[current];
+  var html = '<p class="question-text">' + q.q + '</p><div class="options">';
+  for (var j = 0; j < q.opts.length; j++) {
+    html += '<button class="option-btn" onclick="choose(\'' + q.opts[j].val + '\')">' + q.opts[j].label + '</button>';
+  }
+  html += '</div>';
+  area.innerHTML = html;
+  postHeight();
+}
+ 
+function choose(val) {
+  answers.push(val);
+  current++;
+  render();
+}
+ 
+function restart() {
+  answers = [];
+  current = 0;
+  render();
+}
+ 
+function postHeight() {
+  setTimeout(function() {
+    var h = document.getElementById("quiz").scrollHeight;
+    window.parent.postMessage({ type: "mood-quiz-height", height: h + 16 }, "*");
+  }, 50);
+}
+ 
+render();
+</script>
+ 
+</body>
+</html>
